@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dsa.qtrack.network.ApiClient
-import com.dsa.qtrack.network.QtrackApiService
+import com.dsa.qtrack.View.SolicitudViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var solicitudViewModel: SolicitudViewModel

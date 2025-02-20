@@ -1,10 +1,10 @@
-package com.dsa.qtrack
+package com.dsa.qtrack.View
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dsa.qtrack.model.QtrackResponse
+import com.dsa.qtrack.Solicitud
 import com.dsa.qtrack.network.ApiClient
 import com.dsa.qtrack.network.QtrackApiService
 import kotlinx.coroutines.launch
