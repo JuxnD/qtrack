@@ -1,4 +1,4 @@
-package com.dsa.qtrack.model
+package com.dsa.qtrack.data.model
 
 data class LoginRequest(
     val email: String,
