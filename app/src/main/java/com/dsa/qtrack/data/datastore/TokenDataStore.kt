@@ -2,7 +2,6 @@ package com.dsa.qtrack.data.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +12,7 @@ private val Context.dataStore by preferencesDataStore(name = "user_prefs")
 class TokenDataStore(private val context: Context) {
 
     companion object {
-        val TOKEN_KEY = stringPreferencesKey("user_token")
+        private val TOKEN_KEY = stringPreferencesKey("user_token")
     }
 
     val tokenFlow: Flow<String?> = context.dataStore.data.map { prefs ->

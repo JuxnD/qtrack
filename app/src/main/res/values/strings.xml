@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Qtrack</string>
+    <string name="logo">Logo</string>
+    <string name="welcome_message">Bienvenido a QTrack</string>
+    <string name="email_hint">Correo electrónico</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="login_button">Iniciar sesión</string>
+    <string name="welcome">Bienvenido a QTrack</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="logo_desc">Logo de QTrack</string>
+
 </resources>
