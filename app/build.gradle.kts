@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.dsa.qtrack"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -72,5 +72,9 @@ dependencies {
 
     // ✅ Navegación con Compose (si planeas mover entre pantallas)
     implementation("androidx.navigation:navigation-compose:2.7.6")
+
+    implementation("com.diogobernardino:williamchart:3.10.1")
+
+
 }
 

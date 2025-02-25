@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.dsa.qtrack.data.model.Solicitud
 
 class SolicitudAdapter(private var solicitudes: List<Solicitud>) : RecyclerView.Adapter<SolicitudAdapter.SolicitudViewHolder>() {
 

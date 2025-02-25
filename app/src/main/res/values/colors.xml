@@ -13,4 +13,14 @@
     <color name="button_primary">#3700B3</color>
     <color name="primary_text">#333333</color>
     <color name="secondary_text">#7D7D7D</color>
+    <color name="primaryColor">#4CAF50</color>
+    <color name="secondaryColor">#F5F5F5</color>
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="linkColor">#FF9800</color>
+    <color name="cardOpen">#FFA726</color>
+    <color name="cardClosed">#66BB6A</color>
+    <color name="cardAssigned">#42A5F5</color>
+    <color name="cardCompliance">#AB47BC</color>
+
+
 </resources>

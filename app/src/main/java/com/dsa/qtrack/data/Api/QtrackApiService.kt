@@ -1,7 +1,7 @@
 package com.dsa.qtrack.data.Api
 
 
-import com.dsa.qtrack.Solicitud
+import com.dsa.qtrack.data.model.Solicitud
 import com.dsa.qtrack.data.model.QtrackResponse
 import com.dsa.qtrack.model.LoginRequest
 import com.dsa.qtrack.model.LoginResponse
@@ -23,6 +23,9 @@ interface QtrackApiService {
     @GET("qtrackApiController/getSolicitudesByMensajero/{id_mensajero}")
     suspend fun getSolicitudesByMensajero(
         @Path("id_mensajero") idMensajero: Int
-    ): Response<List<Solicitud>>
+    ): Response<QtrackResponse>
+
+
+
 
 }

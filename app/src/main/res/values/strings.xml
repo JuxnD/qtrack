@@ -8,5 +8,8 @@
     <string name="welcome">Bienvenido a QTrack</string>
     <string name="login">Iniciar sesión</string>
     <string name="logo_desc">Logo de QTrack</string>
+    <string name="mis_solicitudes">Mis Solicitudes</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+
 
 </resources>

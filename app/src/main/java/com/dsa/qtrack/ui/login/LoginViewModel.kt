@@ -3,7 +3,7 @@ package com.dsa.qtrack.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsa.qtrack.data.datastore.TokenDataStore
-import com.dsa.qtrack.model.User
+import com.dsa.qtrack.data.model.User
 import com.dsa.qtrack.repository.LoginRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

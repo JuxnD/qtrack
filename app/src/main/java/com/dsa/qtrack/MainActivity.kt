@@ -59,6 +59,11 @@ class MainActivity : AppCompatActivity() {
             clearSession()
         }
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        clearSession() // Limpia la sesión al cerrar la app
+    }
+
 
     private fun clearSession() {
         val sharedPreferences = getSharedPreferences("QTrackPrefs", MODE_PRIVATE)
