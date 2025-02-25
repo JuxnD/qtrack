@@ -1,4 +1,4 @@
-package com.dsa.qtrack
+package com.dsa.qtrack.data.model
 
 data class Solicitud(
     val id: Int,

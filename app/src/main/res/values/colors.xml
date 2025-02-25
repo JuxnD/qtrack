@@ -13,4 +13,13 @@
     <color name="button_primary">#3700B3</color>
     <color name="primary_text">#333333</color>
     <color name="secondary_text">#7D7D7D</color>
+    <color name="primaryColor">#4CAF50</color>
+    <color name="secondaryColor">#F5F5F5</color>
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="linkColor">#FF9800</color>
+    <color name="cardOpen">#4CAF50</color> <!-- Verde -->
+    <color name="cardClosed">#F44336</color> <!-- Rojo -->
+    <color name="cardAssigned">#2196F3</color> <!-- Azul -->
+    <color name="cardCompliance">#FF9800</color> <!-- Naranja -->
+
 </resources>

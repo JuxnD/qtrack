@@ -1,12 +1,14 @@
 package com.dsa.qtrack.ui.login
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.dsa.qtrack.MainActivity
@@ -26,8 +28,11 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var progressBar: ProgressBar
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         // 🔑 Si ya hay sesión activa, redirige automáticamente al MainActivity
         if (checkSession()) {
@@ -42,10 +47,13 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
-        progressBar = findViewById(R.id.progressBar)
 
         btnLogin.setOnClickListener { performLogin() }
+
     }
+
+
+
 
     private fun performLogin() {
         val email = etEmail.text.toString().trim()

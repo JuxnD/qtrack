@@ -1,12 +1,12 @@
-package com.dsa.ui.solicitud
+package com.dsa.qtrack.ui.solicitud
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dsa.qtrack.Solicitud
+import com.dsa.qtrack.data.model.Solicitud
+import com.dsa.qtrack.api.ApiClient
 import com.dsa.qtrack.data.Api.QtrackApiService
-import com.dsa.qtrack.data.api.ApiClient
 import kotlinx.coroutines.launch
 
 class SolicitudViewModel : ViewModel() {

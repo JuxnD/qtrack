@@ -72,5 +72,8 @@ dependencies {
 
     // ✅ Navegación con Compose (si planeas mover entre pantallas)
     implementation("androidx.navigation:navigation-compose:2.7.6")
+
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }
 
