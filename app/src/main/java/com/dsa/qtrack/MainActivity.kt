@@ -3,15 +3,17 @@ package com.dsa.qtrack
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dsa.qtrack.ui.login.LoginActivity
-import com.dsa.qtrack.ui.solicitud.SolicitudViewModel
+import com.dsa.qtrack.ui.solicitud.SolicitudAdapter
+import com.dsa.qtrack.viewmodel.SolicitudViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var solicitudViewModel: SolicitudViewModel
+    private val solicitudViewModel: SolicitudViewModel by viewModels()
     private lateinit var solicitudAdapter: SolicitudAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,15 +34,13 @@ class MainActivity : AppCompatActivity() {
         solicitudAdapter = SolicitudAdapter(emptyList())
         recyclerView.adapter = solicitudAdapter
 
-        solicitudViewModel = SolicitudViewModel()
-
-        solicitudViewModel.solicitudes.observe(this) { solicitudes ->
+        solicitudViewModel.getSolicitudesAbiertas().observe(this) { solicitudes ->
             Log.d("MainActivity", "Solicitudes actualizadas: ${solicitudes.size} elementos recibidos.")
-            solicitudAdapter.updateSolicitudes(solicitudes)
+            solicitudAdapter.actualizarLista(solicitudes)
         }
 
         Log.d("MainActivity", "Solicitando actualización de solicitudes.")
-        solicitudViewModel.fetchSolicitudes()
+        solicitudViewModel.obtenerSolicitudesAbiertas()
     }
 
     private fun checkSession(): Boolean {
@@ -50,25 +50,21 @@ class MainActivity : AppCompatActivity() {
         return !token.isNullOrEmpty()
     }
 
-    // 🔥 Borra la sesión al cerrar la app
     override fun onStop() {
         super.onStop()
-
-        // Verifica si la app se va a segundo plano y se cierra la tarea
         if (isFinishing) {
             clearSession()
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
-        clearSession() // Limpia la sesión al cerrar la app
+        clearSession()
     }
-
 
     private fun clearSession() {
         val sharedPreferences = getSharedPreferences("QTrackPrefs", MODE_PRIVATE)
         sharedPreferences.edit().clear().apply()
         Log.d("MainActivity", "Sesión cerrada y token eliminado.")
     }
-
 }

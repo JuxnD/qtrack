@@ -1,4 +1,4 @@
-package com.dsa.qtrack.api
+package com.dsa.qtrack.data.api
 
 import com.dsa.qtrack.model.LoginRequest
 import com.dsa.qtrack.model.LoginResponse

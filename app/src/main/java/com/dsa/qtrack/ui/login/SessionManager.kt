@@ -1,7 +1,8 @@
-package com.dsa.qtrack.session
+package com.dsa.qtrack.ui.login
 
 import android.content.Context
 import android.util.Log
+import com.dsa.qtrack.data.api.ApiClient
 
 class SessionManager(context: Context) {
     private val prefs = context.getSharedPreferences("QTrackPrefs", Context.MODE_PRIVATE)
@@ -29,5 +30,10 @@ class SessionManager(context: Context) {
 
     fun logout() {
         prefs.edit().clear().apply()
+
+        // Reinicia Retrofit para limpiar cualquier configuración de sesión
+        ApiClient.resetClient()
     }
+
+
 }

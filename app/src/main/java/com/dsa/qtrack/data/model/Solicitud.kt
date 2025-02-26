@@ -8,7 +8,9 @@ data class Solicitud(
     val cliente: String? = null,
     val direccion: String? = null,
     val prioridad: String? = null,
+    val tipo: String? = null,
     val estatus: String? = null,
     val seguimiento: String? = null,
-    val fecha_entrega: String? = null
+    val fecha_entrega: String? = null,
+    val fecha_inicio: String? = null
 )

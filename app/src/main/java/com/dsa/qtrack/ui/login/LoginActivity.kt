@@ -10,15 +10,16 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.dsa.qtrack.R
-import com.dsa.qtrack.api.ApiClient
-import com.dsa.qtrack.data.Api.QtrackApiService
+import com.dsa.qtrack.data.api.ApiClient
+import com.dsa.qtrack.data.api.QtrackApiService
 import com.dsa.qtrack.model.LoginRequest
 import com.dsa.qtrack.model.LoginResponse
-import com.dsa.qtrack.session.SessionManager
 import com.dsa.qtrack.ui.home.HomeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class LoginActivity : AppCompatActivity() {
 
@@ -32,14 +33,17 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         sessionManager = SessionManager(this)
 
+        // ✅ Reinicia Retrofit para limpiar cualquier instancia previa (especialmente después del logout)
+        ApiClient.resetClient()
+
         if (sessionManager.isLoggedIn()) {
             navigateToHome()
             return
         }
 
         setContentView(R.layout.activity_login)
-
         initViews()
+
         btnLogin.setOnClickListener { performLogin() }
     }
 
@@ -57,17 +61,19 @@ class LoginActivity : AppCompatActivity() {
         if (!validateInputs(email, password)) return
 
         showLoading(true)
+
         val apiService = ApiClient.retrofit.create(QtrackApiService::class.java)
         apiService.login(LoginRequest(email, password)).enqueue(object : Callback<LoginResponse> {
+
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 showLoading(false)
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
-                        Log.d("LoginDebug", "Respuesta recibida: ${loginResponse.user.nombre}")  // ✅ Verifica el nombre recibido
+                        Log.d("LoginDebug", "Respuesta recibida: ${loginResponse.user.nombre}")
                         sessionManager.saveSession(
                             loginResponse.token,
                             loginResponse.user.id,
-                            loginResponse.user.nombre ?: "Sin Nombre"  // ✅ Evita guardar null
+                            loginResponse.user.nombre ?: "Sin Nombre"
                         )
                         navigateToHome()
                     }
@@ -77,10 +83,16 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 showLoading(false)
-                Toast.makeText(this@LoginActivity, "Error: ${t.localizedMessage}", Toast.LENGTH_SHORT).show()
+                val errorMessage = when (t) {
+                    is SocketTimeoutException -> "Error: Tiempo de conexión agotado."
+                    is UnknownHostException -> "Error: No se pudo conectar al servidor."
+                    else -> "Error inesperado: ${t.localizedMessage}"
+                }
+
+                Log.e("LoginDebug", "Error en la solicitud: ${t.localizedMessage}", t)
+                Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -105,7 +117,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToHome() {
-        startActivity(Intent(this, HomeActivity::class.java))
+        val intent = Intent(this, HomeActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
         finish()
     }
 }

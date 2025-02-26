@@ -1,6 +1,6 @@
 package com.dsa.qtrack.model
 
-import com.dsa.qtrack.data.model.User  // ✅ Importa el modelo correcto
+import com.dsa.qtrack.data.model.User
 
 data class LoginResponse(
     val message: String,

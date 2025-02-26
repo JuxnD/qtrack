@@ -1,15 +1,8 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_mis_solicitudes"
-        android:title="@string/mis_solicitudes"
-        android:icon="@android:drawable/ic_menu_agenda"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_logout"
-        android:title="@string/cerrar_sesion"
-        android:icon="@drawable/ic_logout"
-        app:showAsAction="never" />
-
+        android:title="Mis Solicitudes"
+        android:icon="@drawable/ic_list"
+        android:showAsAction="ifRoom" />
 </menu>

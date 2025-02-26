@@ -31,6 +31,33 @@
             android:textSize="14sp"
             android:textColor="#666666"
             android:layout_marginTop="6dp" />
+        <TextView
+            android:id="@+id/tvTipoSolicitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo: Recogida de documentos"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cliente: Nombre Cliente"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvPrioridad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prioridad: Alta"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvFechaInicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inicio: 2025-02-04"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/estatus"

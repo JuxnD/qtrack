@@ -6,25 +6,24 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dsa.qtrack.R
-import com.dsa.qtrack.api.ApiClient
-import com.dsa.qtrack.data.Api.QtrackApiService
-import com.dsa.qtrack.session.SessionManager
+import com.dsa.qtrack.data.api.ApiClient
+import com.dsa.qtrack.data.api.QtrackApiService
 import com.dsa.qtrack.ui.login.LoginActivity
+import com.dsa.qtrack.ui.login.SessionManager
 import com.dsa.qtrack.ui.solicitud.SolicitudesByMensajeroActivity
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var tvUserName: TextView
-    private lateinit var tvOpenRequests: TextView
-    private lateinit var tvClosedRequests: TextView
-    private lateinit var tvAssignedRequests: TextView
-    private lateinit var tvCompletedRequests: TextView
-    private lateinit var apiService: QtrackApiService
+    private lateinit var recyclerViewStats: RecyclerView
+    private lateinit var recyclerViewMenu: RecyclerView
     private lateinit var sessionManager: SessionManager
+    private lateinit var apiService: QtrackApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,21 +39,45 @@ class HomeActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        initViews()
+        tvUserName = findViewById(R.id.tvUserName)
+        recyclerViewStats = findViewById(R.id.recyclerViewStats)
+        recyclerViewMenu = findViewById(R.id.recyclerViewMenu)
+
         tvUserName.text = "👤 ${sessionManager.getUserName()}"
+
+        setupStatsRecyclerView()
+        setupMenuRecyclerView()
 
         apiService = ApiClient.retrofit.create(QtrackApiService::class.java)
         fetchUserRequests(sessionManager.getUserId())
-
-        setupMenuNavigation()
     }
 
-    private fun initViews() {
-        tvUserName = findViewById(R.id.tvUserName)
-        tvOpenRequests = findViewById(R.id.cardOpenRequests).findViewById(R.id.tvStatValue)
-        tvClosedRequests = findViewById(R.id.cardClosedRequests).findViewById(R.id.tvStatValue)
-        tvAssignedRequests = findViewById(R.id.cardAssignedRequests).findViewById(R.id.tvStatValue)
-        tvCompletedRequests = findViewById(R.id.cardCompletedRequests).findViewById(R.id.tvStatValue)
+    private fun setupStatsRecyclerView() {
+        recyclerViewStats.layoutManager = GridLayoutManager(this, 2)
+        val stats = listOf(
+            HomeStat("Abiertas", "0"),
+            HomeStat("Cerradas", "0"),
+            HomeStat("Asignadas", "0"),
+            HomeStat("Cumplidas", "0")
+        )
+        recyclerViewStats.adapter = HomeStatAdapter(stats)
+    }
+
+    private fun setupMenuRecyclerView() {
+        recyclerViewMenu.layoutManager = GridLayoutManager(this, 2)
+        val menuItems = listOf(
+            HomeMenuItem("Mis Solicitudes", R.drawable.ic_list) {
+                val intent = Intent(this, SolicitudesByMensajeroActivity::class.java)
+                intent.putExtra("id_mensajero", sessionManager.getUserId())
+                startActivity(intent)
+            },
+            HomeMenuItem("Cerrar Sesión", R.drawable.ic_logout) {
+                sessionManager.logout()
+                Toast.makeText(this, "Sesión cerrada.", Toast.LENGTH_SHORT).show()
+                navigateToLogin()
+            }
+        )
+        recyclerViewMenu.adapter = HomeMenuAdapter(menuItems)
     }
 
     private fun fetchUserRequests(userId: Int) {
@@ -64,10 +87,14 @@ class HomeActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val solicitudes = response.body()?.data?.rows ?: emptyList()
 
-                    tvOpenRequests.text = solicitudes.count { it.estatus.equals("abierto", ignoreCase = true) }.toString()
-                    tvClosedRequests.text = solicitudes.count { it.estatus.equals("cerrado", ignoreCase = true) }.toString()
-                    tvAssignedRequests.text = solicitudes.count { it.seguimiento.equals("Asignada", ignoreCase = true) }.toString()
-                    tvCompletedRequests.text = solicitudes.count { it.seguimiento.equals("Entregado", ignoreCase = true) }.toString()
+                    val updatedStats = listOf(
+                        HomeStat("Abiertas", solicitudes.count { it.estatus.equals("abierto", ignoreCase = true) }.toString()),
+                        HomeStat("Cerradas", solicitudes.count { it.estatus.equals("cerrado", ignoreCase = true) }.toString()),
+                        HomeStat("Asignadas", solicitudes.count { it.seguimiento.equals("Asignada", ignoreCase = true) }.toString()),
+                        HomeStat("Cumplidas", solicitudes.count { it.seguimiento.equals("Entregado", ignoreCase = true) }.toString())
+                    )
+
+                    (recyclerViewStats.adapter as? HomeStatAdapter)?.updateStats(updatedStats)
                 } else {
                     Toast.makeText(this@HomeActivity, "Error al obtener datos: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }
@@ -77,23 +104,15 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupMenuNavigation() {
-        findViewById<CardView>(R.id.cardMisSolicitudes).setOnClickListener {
-            startActivity(Intent(this, SolicitudesByMensajeroActivity::class.java))
+    private fun logout() {
+        sessionManager.logout()
+        val intent = Intent(this, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-
-        findViewById<CardView>(R.id.cardTodasSolicitudes).setOnClickListener {
-            Toast.makeText(this, "Funcionalidad en desarrollo", Toast.LENGTH_SHORT).show()
-        }
-
-        findViewById<CardView>(R.id.cardSolicitudesCerradas).setOnClickListener {
-            Toast.makeText(this, "Funcionalidad en desarrollo", Toast.LENGTH_SHORT).show()
-        }
-
-        findViewById<CardView>(R.id.cardConfiguracion).setOnClickListener {
-            Toast.makeText(this, "Configuración no disponible aún", Toast.LENGTH_SHORT).show()
-        }
+        startActivity(intent)
+        finish()
     }
+
 
     private fun navigateToLogin() {
         startActivity(Intent(this, LoginActivity::class.java))

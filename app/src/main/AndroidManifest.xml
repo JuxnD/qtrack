@@ -20,12 +20,14 @@
         <!-- ✅ Actividad de Login como launcher -->
         <activity
             android:name=".ui.login.LoginActivity"
+            android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <!-- 🏠 Actividad del Home -->
         <activity
@@ -39,7 +41,7 @@
             android:name=".MainActivity"
             android:exported="true" />
 
-        <!-- 📝 Actividad de Solicitudes por Mensajero (🔑 ESTA ES LA QUE FALTABA) -->
+        <!-- 📝 Actividad de Solicitudes por Mensajero  -->
         <activity
             android:name=".ui.solicitud.SolicitudesByMensajeroActivity"
             android:exported="true"
