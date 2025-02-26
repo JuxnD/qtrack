@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dsa.qtrack.R
-import com.dsa.qtrack.viewmodel.SolicitudViewModel
+
 
 class SolicitudesByMensajeroActivity : AppCompatActivity() {
 
@@ -22,10 +22,10 @@ class SolicitudesByMensajeroActivity : AppCompatActivity() {
         adapter = SolicitudAdapter(listOf())
         recyclerView.adapter = adapter
 
-        viewModel.getSolicitudesAbiertas().observe(this) { solicitudes ->
+        viewModel.solicitudesAbiertas.observe(this) { solicitudes ->
             adapter.actualizarLista(solicitudes)
         }
 
-        viewModel.obtenerSolicitudesAbiertas()
+        viewModel.fetchSolicitudesAbiertas()
     }
 }

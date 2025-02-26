@@ -1,6 +1,6 @@
-package com.dsa.qtrack.repository
+package com.dsa.qtrack.data.repository
 
-import com.dsa.qtrack.api.ApiClient
+import com.dsa.qtrack.data.api.ApiClient
 import com.dsa.qtrack.model.LoginRequest
 import com.dsa.qtrack.model.LoginResponse
 import retrofit2.Response

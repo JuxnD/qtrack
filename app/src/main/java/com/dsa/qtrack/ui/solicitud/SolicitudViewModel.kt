@@ -1,4 +1,4 @@
-package com.dsa.qtrack.viewmodel
+package com.dsa.qtrack.ui.solicitud
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,19 +13,19 @@ class SolicitudViewModel : ViewModel() {
     private val _solicitudesAbiertas = MutableLiveData<List<Solicitud>>()
     val solicitudesAbiertas: LiveData<List<Solicitud>> get() = _solicitudesAbiertas
 
-    /**
-     * Método para obtener las solicitudes abiertas desde la API.
-     */
-    fun obtenerSolicitudesAbiertas() {
+    init {
+        fetchSolicitudesAbiertas()  // Cambiado de obtenerSolicitudesAbiertas a fetchSolicitudesAbiertas
+    }
+
+    fun fetchSolicitudesAbiertas() {
         viewModelScope.launch {
             try {
                 val response = ApiClient.qtrackApiService.getSolicitudesByMensajero(idMensajero = 164)
                 if (response.isSuccessful) {
-                    val solicitudesFiltradas = response.body()?.data?.rows?.filter { it.estatus?.equals("abierto", ignoreCase = true) == true } ?: emptyList()
+                    val solicitudesFiltradas = response.body()?.data?.rows?.filter { it.estatus == "abierto" } ?: emptyList()
                     _solicitudesAbiertas.postValue(solicitudesFiltradas)
                 } else {
-                    // Manejo de error si la respuesta no es exitosa
-                    _solicitudesAbiertas.postValue(emptyList())
+                    _solicitudesAbiertas.postValue(emptyList())  // Manejo de error
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -33,9 +33,4 @@ class SolicitudViewModel : ViewModel() {
             }
         }
     }
-
-    /**
-     * Método para exponer las solicitudes abiertas como LiveData.
-     */
-    fun getSolicitudesAbiertas(): LiveData<List<Solicitud>> = solicitudesAbiertas
 }

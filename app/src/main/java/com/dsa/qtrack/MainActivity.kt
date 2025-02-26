@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dsa.qtrack.ui.login.LoginActivity
 import com.dsa.qtrack.ui.solicitud.SolicitudAdapter
-import com.dsa.qtrack.viewmodel.SolicitudViewModel
+import com.dsa.qtrack.ui.solicitud.SolicitudViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,13 +34,15 @@ class MainActivity : AppCompatActivity() {
         solicitudAdapter = SolicitudAdapter(emptyList())
         recyclerView.adapter = solicitudAdapter
 
-        solicitudViewModel.getSolicitudesAbiertas().observe(this) { solicitudes ->
+        // ✅ Actualización aquí: Observa directamente la propiedad solicitudesAbiertas
+        solicitudViewModel.solicitudesAbiertas.observe(this) { solicitudes ->
             Log.d("MainActivity", "Solicitudes actualizadas: ${solicitudes.size} elementos recibidos.")
             solicitudAdapter.actualizarLista(solicitudes)
         }
 
+        // ✅ Cambia a fetchSolicitudesAbiertas para iniciar la carga
         Log.d("MainActivity", "Solicitando actualización de solicitudes.")
-        solicitudViewModel.obtenerSolicitudesAbiertas()
+        solicitudViewModel.fetchSolicitudesAbiertas()
     }
 
     private fun checkSession(): Boolean {
