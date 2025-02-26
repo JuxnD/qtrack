@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         // ✅ Cambia a fetchSolicitudesAbiertas para iniciar la carga
         Log.d("MainActivity", "Solicitando actualización de solicitudes.")
-        solicitudViewModel.fetchSolicitudesAbiertas()
+        solicitudViewModel.fetchSolicitudesAbiertas(this)
     }
 
     private fun checkSession(): Boolean {

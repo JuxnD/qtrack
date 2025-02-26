@@ -11,7 +11,7 @@ import com.dsa.qtrack.data.model.Solicitud
 class SolicitudAdapter(private var solicitudes: List<Solicitud>) : RecyclerView.Adapter<SolicitudAdapter.SolicitudViewHolder>() {
 
     inner class SolicitudViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvNumeroSolicitud: TextView = itemView.findViewById(R.id.solicitudNum)
+        val tvNumeroSolicitud: TextView = itemView.findViewById(R.id.tvSolicitudNumero)
         val tvTipoSolicitud: TextView = itemView.findViewById(R.id.tvTipoSolicitud)
         val tvCliente: TextView = itemView.findViewById(R.id.tvCliente)
         val tvPrioridad: TextView = itemView.findViewById(R.id.tvPrioridad)
