@@ -9,11 +9,13 @@ object ApiClient {
 
     private var _retrofit: Retrofit? = null
 
+    /*  192.168.1.1 */
+
     val retrofit: Retrofit
         get() {
             if (_retrofit == null) {
                 _retrofit = Retrofit.Builder()
-                    .baseUrl("http://192.168.20.51:8080/control360i/") // Cambia la URL si es necesario
+                    .baseUrl("http://192.168.1.8:8080/control360i/") // Cambia la URL si es necesario
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
             }

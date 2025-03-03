@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollViewDetalle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9FAFB"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_card"
+        android:padding="16dp"
+        android:elevation="2dp">
+
+        <!-- 📝 Encabezado: Tipo de Solicitud + Número -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/tvTipoSolicitudDetalle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Recogida de documentos"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#2C3E50" />
+
+            <TextView
+                android:id="@+id/tvSolicitudNumeroDetalle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#320"
+                android:textSize="16sp"
+                android:textColor="#7B8D93"
+                android:paddingStart="8dp" />
+        </LinearLayout>
+
+        <!-- 🔄 Fila 1: Prioridad y Fecha Inicio -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvPrioridadDetalle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Prioridad: Alta"
+                android:textColor="#34495E"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvFechaInicioDetalle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Inicio: 26/02/2025"
+                android:textColor="#34495E"
+                android:textSize="15sp"
+                android:gravity="end" />
+        </LinearLayout>
+
+        <!-- 🏢 Fila 2: Cliente y Destinatario -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvClienteDetalle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Cliente: Valorant SAS"
+                android:textColor="#34495E"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvDestinatarioDetalle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Destinatario: Juan D."
+                android:textColor="#34495E"
+                android:textSize="15sp"
+                android:gravity="end" />
+        </LinearLayout>
+
+        <!-- 📍 Fila 3: Dirección -->
+        <TextView
+            android:id="@+id/tvDireccionDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dirección: Blas de Lezo"
+            android:textColor="#2C3E50"
+            android:textSize="15sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 📄 Descripción -->
+        <TextView
+            android:id="@+id/tvDescripcionDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción: Carpeta agosto 2024"
+            android:textColor="#2C3E50"
+            android:textSize="15sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 🔙 Botón Volver -->
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver"
+            android:backgroundTint="#2C3E50"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:elevation="2dp" />
+
+    </LinearLayout>
+</ScrollView>

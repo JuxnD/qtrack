@@ -40,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         tvUserName = findViewById(R.id.tvUserName)
-        recyclerViewStats = findViewById(R.id.recyclerViewStats)
+        recyclerViewStats = findViewById(R.id.viewPagerStats)
         recyclerViewMenu = findViewById(R.id.recyclerViewMenu)
 
         tvUserName.text = "👤 ${sessionManager.getUserName()}"

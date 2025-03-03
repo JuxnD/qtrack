@@ -9,12 +9,14 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.dsa.qtrack.R
 import com.dsa.qtrack.data.api.ApiClient
 import com.dsa.qtrack.data.api.QtrackApiService
 import com.dsa.qtrack.model.LoginRequest
 import com.dsa.qtrack.model.LoginResponse
 import com.dsa.qtrack.ui.home.HomeActivity
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         ApiClient.resetClient()
 
         if (sessionManager.isLoggedIn()) {
+            Log.d("LoginDebug", "Usuario ya logueado, redirigiendo a HomeActivity")
             navigateToHome()
             return
         }
@@ -67,19 +70,26 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 showLoading(false)
+
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
-                        Log.d("LoginDebug", "Respuesta recibida: ${loginResponse.user.nombre}")
+                        Log.d("LoginDebug", "Login exitoso. Usuario: ${loginResponse.user.nombre}, Token: ${loginResponse.token}")
+
                         sessionManager.saveSession(
                             loginResponse.token,
                             loginResponse.user.id,
                             loginResponse.user.nombre ?: "Sin Nombre"
                         )
+
                         navigateToHome()
+                    } ?: run {
+                        Log.e("LoginDebug", "Error: Respuesta vacía del servidor")
+                        Toast.makeText(this@LoginActivity, "Error: Respuesta vacía del servidor", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Log.e("LoginDebug", "Error en login: ${response.errorBody()?.string()}")
-                    Toast.makeText(this@LoginActivity, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("LoginDebug", "Error en login: Código HTTP=${response.code()}, Mensaje=${response.message()}, Detalles=$errorBody")
+                    Toast.makeText(this@LoginActivity, "Credenciales incorrectas. Verifica tu usuario y contraseña.", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -117,6 +127,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToHome() {
+        Log.d("LoginDebug", "Redirigiendo a HomeActivity")
         val intent = Intent(this, HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }

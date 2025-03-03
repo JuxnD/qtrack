@@ -7,8 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background">#F5F5F5</color>
-    <color name="primary">#6200EE</color>
     <color name="input_background">#FFFFFF</color>
     <color name="button_primary">#3700B3</color>
     <color name="primary_text">#333333</color>
@@ -21,6 +19,26 @@
     <color name="cardClosed">#66BB6A</color>
     <color name="cardAssigned">#42A5F5</color>
     <color name="cardCompliance">#AB47BC</color>
+
+        <!-- Primary Brand Colors -->
+        <color name="primary">#1E88E5</color> <!-- Azul profesional -->
+        <color name="primary_dark">#1565C0</color> <!-- Azul oscuro -->
+        <color name="secondary">#F57C00</color> <!-- Naranja Material -->
+        <color name="secondary_dark">#E65100</color> <!-- Naranja oscuro -->
+
+        <!-- Backgrounds -->
+        <color name="background">#F5F5F5</color> <!-- Fondo claro -->
+        <color name="surface">#FFFFFF</color> <!-- Tarjetas y elementos flotantes -->
+
+        <!-- Text Colors -->
+        <color name="text_primary">#212121</color> <!-- Texto principal negro -->
+        <color name="text_secondary">#757575</color> <!-- Texto secundario gris oscuro -->
+
+        <!-- Otros colores -->
+        <color name="success">#4CAF50</color> <!-- Verde éxito -->
+        <color name="warning">#FF9800</color> <!-- Amarillo advertencia -->
+        <color name="error">#D32F2F</color> <!-- Rojo error -->
+
 
 
 </resources>

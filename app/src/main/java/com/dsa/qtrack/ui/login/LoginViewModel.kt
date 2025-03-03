@@ -1,5 +1,6 @@
 package com.dsa.qtrack.ui.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsa.qtrack.data.datastore.TokenDataStore
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.io.IOException
 
 sealed class LoginState {
     object Idle : LoginState()
@@ -29,21 +31,36 @@ class LoginViewModel(
         viewModelScope.launch {
             _state.value = LoginState.Loading
             try {
+                Log.d("LoginDebug", "Iniciando sesión con Email=$email")
+
                 val response = repository.login(email, password)
+
                 if (response.isSuccessful) {
-                    response.body()?.let { loginResponse ->
+                    val loginResponse = response.body()
+                    if (loginResponse != null) {
+                        Log.d("LoginDebug", "Login exitoso. Usuario: ${loginResponse.user.nombre}, Token: ${loginResponse.token}")
+
+                        // Guardar el token en el DataStore
                         tokenDataStore.saveToken(loginResponse.token)
                         _state.value = LoginState.Success(loginResponse.user, loginResponse.token)
-                    } ?: run {
-                        _state.value = LoginState.Error("Respuesta vacía del servidor.")
+                    } else {
+                        Log.e("LoginDebug", "Error: Respuesta vacía del servidor")
+                        _state.value = LoginState.Error("El servidor no devolvió datos válidos.")
                     }
                 } else {
-                    _state.value = LoginState.Error("Error: ${response.message()}")
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("LoginDebug", "Error en login: Código HTTP=${response.code()}, Mensaje=${response.message()}, Detalles=$errorBody")
+                    _state.value = LoginState.Error("Error en la autenticación: ${response.message()} (Detalles: $errorBody)")
                 }
             } catch (e: HttpException) {
-                _state.value = LoginState.Error("Error HTTP: ${e.localizedMessage}")
+                Log.e("LoginDebug", "Error HTTP: ${e.code()} - ${e.message()}")
+                _state.value = LoginState.Error("Error en el servidor: ${e.message()}")
+            } catch (e: IOException) {
+                Log.e("LoginDebug", "Error de conexión: ${e.localizedMessage}")
+                _state.value = LoginState.Error("No se pudo conectar al servidor. Verifica tu conexión a Internet.")
             } catch (e: Exception) {
-                _state.value = LoginState.Error("Error desconocido: ${e.localizedMessage}")
+                Log.e("LoginDebug", "Error desconocido: ${e.localizedMessage}", e)
+                _state.value = LoginState.Error("Error inesperado: ${e.localizedMessage}")
             }
         }
     }

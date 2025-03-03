@@ -46,6 +46,9 @@
             android:name=".ui.solicitud.SolicitudesByMensajeroActivity"
             android:exported="true"
             android:label="Solicitudes Asignadas" />
+        <activity android:name=".ui.solicitud.DetalleRecogidaActivity"/>
+        <activity android:name=".ui.solicitud.DetalleRemisionActivity"/>
+
     </application>
 
 </manifest>
